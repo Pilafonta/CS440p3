@@ -1,5 +1,6 @@
 import csv
 import numpy as np 
+import sys
 
 class state:
 	'''
@@ -31,16 +32,18 @@ class output:
 		self.outSym = outSym
 		self.prob = b
 
-def main:
+def main():
 	hmmDef = []
 	obsDef = []
 
-	with open("./sentence.hmm", "rb") as infile:
+	# print sys.argv
+
+	with open("./%s" %sys.argv[1], "rb") as infile:
 		reader = csv.reader(infile, delimiter=" ")
 		for row in reader:
 			hmmDef.append(row)
 
-	with open("./example1.obs", "rb") as infile:
+	with open("./%s" %sys.argv[2], "rb") as infile:
 		reader = csv.reader(infile, delimiter=" ")
 		for row in reader:
 			obsDef.append(row)
