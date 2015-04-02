@@ -26,7 +26,7 @@ pi = np.array(hmmDef[-1])
 
 symList = np.array(hmmDef[2])
 
-# print a, "\n", b, "\n", pi
+#print a, "\n", b, "\n", pi
 
 stateList = []
 for stateNum in range(int(hmmDef[0][0])):
@@ -34,12 +34,37 @@ for stateNum in range(int(hmmDef[0][0])):
 
 connectList = []
 for stateFrom in stateList:
-	# print stateFrom.name, stateFrom.index
+	#print stateFrom.name, stateFrom.index, stateFrom.init
 	for stateTo in stateList:
 		if a[stateFrom.index][stateTo.index] > 0.0:
 			connectList.append(hmm.connect(stateFrom, stateTo, a[stateFrom.index][stateTo.index]))
 
 outputList = []
 for origState in stateList:
+	temp = []
 	for i in range(int(hmmDef[0][1])):
-		outputList.append(hmm.output(origState, symList[i], b[origState.index][i]))
+		temp.append(hmm.output(origState, symList[i], b[origState.index][i]))
+	outputList.append(temp)
+outputList = np.array(outputList)
+
+'''
+def forHelp(alpha):
+	#recursive call
+	alphaNext = []
+	for x in outputList:
+		alphaNext.append(alpha*sum(x.*x.origin.a))
+	forHelp(alphaNext)
+'''
+def forward():
+	alpha1 = []
+	# base case
+	for x in range(len(outputList)):
+		for l in outputList[x]:
+			alpha1.append(l.b * l.origin.pi)
+	#forHelp(alpha1)
+
+	print alpha1
+
+
+forward()
+
