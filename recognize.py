@@ -47,23 +47,26 @@ for origState in stateList:
 	outputList.append(temp)
 outputList = np.array(outputList)
 
-'''
+
 def forHelp(alpha):
 	#recursive call
 	alphaNext = []
 	for x in outputList:
 		alphaNext.append(alpha*sum(x.*x.origin.a))
 	forHelp(alphaNext)
-'''
+
 def forward():
 	alpha1 = []
 	# base case
 	for x in range(len(outputList)):
+		temp = []
 		for l in outputList[x]:
-			alpha1.append(l.b * l.origin.pi)
-	#forHelp(alpha1)
+			temp.append(l.b * l.origin.pi)
+		alpha1.append(temp)
+	#print np.array(alpha1)[:,0]
+	forHelp(np.array(alpha1)[:,0])
 
-	print alpha1
+	print np.array(alpha1)
 
 
 forward()
