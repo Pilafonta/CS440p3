@@ -32,47 +32,47 @@ class output:
 		self.outSym = outSym
 		self.prob = b
 
-def main():
-	hmmDef = []
-	obsDef = []
+# def main():
+	# hmmDef = []
+	# obsDef = []
 
-	# print sys.argv
+	# # print sys.argv
 
-	with open("./%s" %sys.argv[1], "rb") as infile:
-		reader = csv.reader(infile, delimiter=" ")
-		for row in reader:
-			hmmDef.append(row)
+	# with open("./%s" %sys.argv[1], "rb") as infile:
+	# 	reader = csv.reader(infile, delimiter=" ")
+	# 	for row in reader:
+	# 		hmmDef.append(row)
 
-	with open("./%s" %sys.argv[2], "rb") as infile:
-		reader = csv.reader(infile, delimiter=" ")
-		for row in reader:
-			obsDef.append(row)
+	# with open("./%s" %sys.argv[2], "rb") as infile:
+	# 	reader = csv.reader(infile, delimiter=" ")
+	# 	for row in reader:
+	# 		obsDef.append(row)
 
-	a = np.array(hmmDef[4:8])
+	# a = np.array(hmmDef[4:8])
 
-	b = np.array(hmmDef[9:13])
+	# b = np.array(hmmDef[9:13])
 
-	pi = np.array(hmmDef[-1])
+	# pi = np.array(hmmDef[-1])
 
-	symList = np.array(hmmDef[2])
+	# symList = np.array(hmmDef[2])
 
-	# print a, "\n", b, "\n", pi
+	# # print a, "\n", b, "\n", pi
 
-	stateList = []
-	for stateNum in range(int(hmmDef[0][0])):
-		stateList.append(state(hmmDef[1][stateNum], stateNum, pi[stateNum]))
+	# stateList = []
+	# for stateNum in range(int(hmmDef[0][0])):
+	# 	stateList.append(state(hmmDef[1][stateNum], stateNum, pi[stateNum]))
 
-	connectList = []
-	for stateFrom in stateList:
-		# print stateFrom.name, stateFrom.index
-		for stateTo in stateList:
-			if a[stateFrom.index][stateTo.index] > 0.0:
-				connectList.append(connect(stateFrom, stateTo, a[stateFrom.index][stateTo.index]))
+	# connectList = []
+	# for stateFrom in stateList:
+	# 	# print stateFrom.name, stateFrom.index
+	# 	for stateTo in stateList:
+	# 		if a[stateFrom.index][stateTo.index] > 0.0:
+	# 			connectList.append(connect(stateFrom, stateTo, a[stateFrom.index][stateTo.index]))
 
-	outputList = []
-	for origState in stateList:
-		for i in range(int(hmmDef[0][1])):
-			outputList.append(output(origState, symList[i], b[origState.index][i]))
+	# outputList = []
+	# for origState in stateList:
+	# 	for i in range(int(hmmDef[0][1])):
+	# 		outputList.append(output(origState, symList[i], b[origState.index][i]))
 
 	# for o in outputList:
 	# 	print o.origin.name, o.outSym, o.prob
@@ -80,4 +80,4 @@ def main():
 	# for c in connectList:
 	# 	print c.origin.name, c.to.name, c.prob
 
-if __name__ == "__main__": main()
+# if __name__ == "__main__": main()
