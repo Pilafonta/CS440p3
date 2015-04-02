@@ -10,7 +10,7 @@ class state:
 	def __init__(self, name, ix, pi):
 		self.name = name
 		self.index = ix
-		self.init = pi
+		self.init = float(pi)
 
 class connect:
 	'''
@@ -20,7 +20,7 @@ class connect:
 	def __init__(self, orig, to, a):
 		self.origin = orig
 		self.to = to
-		self.prob = a
+		self.prob = float(a)
 
 class output:
 	'''
@@ -30,7 +30,7 @@ class output:
 	def __init__(self, orig, outSym, b):
 		self.origin = orig
 		self.outSym = outSym
-		self.prob = b
+		self.prob = float(b)
 
 # def main():
 	# hmmDef = []
