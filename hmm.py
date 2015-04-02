@@ -27,7 +27,8 @@ class output:
 	Defines output probabilities. Parameters include the originating state, the symbol to be output,
 	and the probability of that symbol being output (b)
 	'''
-	def __init__(self, orig, outSym, b):
+	def __init__(self, orig, outSym, b, ix):
 		self.origin = orig
 		self.outSym = outSym
 		self.b = float(b) #* 1000
+		self.index = ix
