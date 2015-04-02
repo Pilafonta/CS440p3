@@ -18,10 +18,10 @@ with open("./%s" %sys.argv[2], "rb") as infile:
 	for row in reader:
 		obsDef.append(row)
 
+numObs = int(obsDef[0][0])
+
 a = np.array(hmmDef[4:8])
-
 b = np.array(hmmDef[9:13])
-
 pi = np.array(hmmDef[-1])
 
 symList = np.array(hmmDef[2])
@@ -52,7 +52,7 @@ def forHelp(alpha):
 	#recursive call
 	alphaNext = []
 	for x in outputList:
-		alphaNext.append(alpha*sum(x.*x.origin.a))
+		alphaNext.append(alpha*sum(x.b*x.origin.a))
 	forHelp(alphaNext)
 
 def forward():
@@ -68,6 +68,14 @@ def forward():
 
 	print np.array(alpha1)
 
+print obsDef
 
-forward()
+num = 1
+for i in range(numObs):
+	T = obsDef[num]
+	num += 2
+	
+
+
+# forward()
 
