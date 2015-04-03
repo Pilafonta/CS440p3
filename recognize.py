@@ -24,6 +24,10 @@ a = np.array(hmmDef[4:8]).astype(float)
 b = np.array(hmmDef[9:13]).astype(float)
 pi = np.array(hmmDef[-1]).astype(float)
 
+a *= 10
+b *= 10
+pi*= 10
+
 symList = np.array(hmmDef[2])
 
 #print a, "\n", b, "\n", pi
@@ -88,21 +92,32 @@ for o in obs:
 				# print out.origin.name
 				objObs.append(out)
 
-# for x in objObs:
-# 	print x.outSym, x.b, x.index
+for x in objObs:
+	print x.outSym, x.b, x.index#, x.origin.index
 
 ALPHA = np.zeros((T, len(hmmDef[1])))
 
 ind = objObs[0].index
 ALPHA[0] = alpha1[:,ind]
 
-print "ALPHA = "
-print ALPHA
-print "a = "
-print a
+# print "ALPHA = "
+# print ALPHA
+# print "a = "
+# print a
+print b
 
 for t in range(1,T):
-	sumA = 0
-	for aInd
-		for alphaInd in range(len(ALPHA[t-1])):
-			sumA += ALPHA[t-1][y] * a[][]
+	bjs=[]
+	for j in range(len(ALPHA[t])):
+		sumA = 0
+		for i in range(len(ALPHA[t-1])):
+			sumA += ALPHA[t-1][i] * a[i][j]
+		bj = b[j][objObs[t*4].index]
+		# print sumA, bj, sumA * bj
+		bjs.append(bj)
+		print sumA
+		ALPHA[t,j] = sumA * bj
+	# for j in range(len(ALPHA[t])): 
+	# 	ALPHA[t][j] *= bjs[j]  
+
+print ALPHA
