@@ -24,9 +24,9 @@ a = np.array(hmmDef[4:8]).astype(float)
 b = np.array(hmmDef[9:13]).astype(float)
 pi = np.array(hmmDef[-1]).astype(float)
 
-a *= 1000
-b *= 1000
-pi*= 1000
+# a *= 1000
+# b *= 1000
+# pi*= 1000
 
 symList = np.array(hmmDef[2])
 
@@ -92,8 +92,8 @@ for o in obs:
 				# print out.origin.name
 				objObs.append(out)
 
-for x in objObs:
-	print x.outSym, x.b, x.index#, x.origin.index
+# for x in objObs:
+# 	print x.outSym, x.b, x.index#, x.origin.index
 
 ALPHA = np.zeros((T, len(hmmDef[1])))
 
@@ -104,7 +104,7 @@ ALPHA[0] = alpha1[:,ind]
 # print ALPHA
 # print "a = "
 # print a
-print b
+# print b
 
 for t in range(1,T):
 	bjs=[]
@@ -113,13 +113,11 @@ for t in range(1,T):
 		for i in range(len(ALPHA[t-1])):
 			sumA += ALPHA[t-1][i] * a[i][j]
 		bj = b[j][objObs[t*4].index]
-		# print sumA, bj, sumA * bj
-		bjs.append(bj)
-		print i, j
-		print sumA, "---", bj
-		print "mult", sumA * bj
-		ALPHA[t,j] =  sumA #* bj
+		
+		z = sumA * bj
+		ALPHA[t,j] = z#sumA
 	# for j in range(len(ALPHA[t])): 
 	# 	ALPHA[t][j] *= bjs[j]  
 
-print ALPHA
+# ALPHA[2][0] = .085*.05
+print sum(ALPHA[T-1])
