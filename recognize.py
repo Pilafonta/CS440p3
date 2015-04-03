@@ -24,9 +24,9 @@ a = np.array(hmmDef[4:8]).astype(float)
 b = np.array(hmmDef[9:13]).astype(float)
 pi = np.array(hmmDef[-1]).astype(float)
 
-a *= 10
-b *= 10
-pi*= 10
+a *= 1000
+b *= 1000
+pi*= 1000
 
 symList = np.array(hmmDef[2])
 
@@ -115,8 +115,10 @@ for t in range(1,T):
 		bj = b[j][objObs[t*4].index]
 		# print sumA, bj, sumA * bj
 		bjs.append(bj)
-		print sumA
-		ALPHA[t,j] = sumA * bj
+		print i, j
+		print sumA, "---", bj
+		print "mult", sumA * bj
+		ALPHA[t,j] =  sumA #* bj
 	# for j in range(len(ALPHA[t])): 
 	# 	ALPHA[t][j] *= bjs[j]  
 
