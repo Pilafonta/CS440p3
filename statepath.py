@@ -46,7 +46,6 @@ for stateNum in range(int(hmmDef[0][0])):
 
 connectList = []
 for stateFrom in stateList:
-	#print stateFrom.name, stateFrom.index, stateFrom.init
 	for stateTo in stateList:
 		if a[stateFrom.index][stateTo.index] > 0.0:
 			connectList.append(hmm.connect(stateFrom, stateTo, a[stateFrom.index][stateTo.index]))
@@ -72,7 +71,7 @@ for x in range(len(outputList)):
 	alpha1.append(temp)
 alpha1 = np.array(alpha1)
 
-#compute and print the rest of the alphas
+#compute and print the rest of the deltas
 num = 1
 for n in range(numSent): 	
 	T = int(obsDef[num][0])
@@ -86,20 +85,51 @@ for n in range(numSent):
 				if out.outSym == o:
 					objObs.append(out)
 
-	ALPHA = np.zeros((T, len(hmmDef[1])))
+	delta = np.zeros((T, len(hmmDef[1])))
 
 	ind = objObs[0].index
-	ALPHA[0] = alpha1[:,ind]
+	delta[0] = alpha1[:,ind]
 
+	# fill in Phi table
+	phi = []
 	for t in range(1,T):
-		bjs=[]
-		for j in range(len(ALPHA[t])):
-			sumA = 0
-			for i in range(len(ALPHA[t-1])):
-				sumA += ALPHA[t-1][i] * a[i][j]
-			bj = b[j][objObs[t*4].index]
-			
-			z = sumA * bj
-			ALPHA[t,j] = z
 
-	print sum(ALPHA[T-1])
+
+		phiJ = []
+		for j in range(len(delta[t])):
+			maxDelt = 0.0
+			argMax = 0
+
+			for i in range(len(delta[t-1])):
+				curr = delta[t-1][i] * a[i][j]
+				if curr > maxDelt:
+					maxDelt = curr
+					argMax = i+1 
+
+			phiJ.append(argMax)
+			bj = b[j][objObs[t*4].index]
+			z = maxDelt * bj
+			delta[t,j] = z
+
+		phi.append(phiJ)
+
+	# backtracking to get optimal sequence
+	pathOpt = []	
+	for t in range(T,0,-1):
+		pathOpt.append(max((delta[t-1][d], d+1) for d in range(len(delta[t-1]))))
+		
+
+	pathOpt = np.array(pathOpt)
+	if pathOpt[:,0][0] > 0:
+		stInd = pathOpt[:,1]-1
+
+	st = []
+	for c in range(len(stInd)-1,-1,-1):
+		for state in stateList:
+			if state.index == stInd[c]:
+				st.append(state.name)
+
+	if pathOpt[:,0][0] > 0:
+		print pathOpt[:,0][0], st 
+	else: 
+		print pathOpt[:,0][0]

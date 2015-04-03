@@ -45,7 +45,6 @@ for stateNum in range(int(hmmDef[0][0])):
 
 connectList = []
 for stateFrom in stateList:
-	#print stateFrom.name, stateFrom.index, stateFrom.init
 	for stateTo in stateList:
 		if a[stateFrom.index][stateTo.index] > 0.0:
 			connectList.append(hmm.connect(stateFrom, stateTo, a[stateFrom.index][stateTo.index]))
@@ -91,7 +90,6 @@ for n in range(numSent):
 	ALPHA[0] = alpha1[:,ind]
 
 	for t in range(1,T):
-		bjs=[]
 		for j in range(len(ALPHA[t])):
 			sumA = 0
 			for i in range(len(ALPHA[t-1])):
@@ -101,4 +99,5 @@ for n in range(numSent):
 			z = sumA * bj
 			ALPHA[t,j] = z
 
-	print sum(ALPHA[T-1])
+	print ALPHA
+	# print sum(ALPHA[T-1])
