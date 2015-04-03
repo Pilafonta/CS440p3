@@ -1,3 +1,11 @@
+'''
+Written by Karl Shiffler (shiffler@bu.edu) 
+	   and Peter LaFontaine (lafonta@bu.edu)
+
+April 2, 2015
+Implements the classes for the contruction of the HMM.
+'''
+
 import csv
 import numpy as np 
 import sys

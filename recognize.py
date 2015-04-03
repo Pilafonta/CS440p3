@@ -1,3 +1,15 @@
+'''
+Written by Karl Shiffler (shiffler@bu.edu) 
+	   and Peter LaFontaine (lafonta@bu.edu)
+
+April 2, 2015
+Usage is "python recognize.py file.hmm file.obs"
+
+Takes two command line arguments, the first being the HMM definition file, 
+and the second being the list of observations. It then calculates and prints 
+the probability of the observed sequences. 
+
+'''
 import hmm
 import csv
 import numpy as np 
@@ -24,13 +36,7 @@ a = np.array(hmmDef[4:8]).astype(float)
 b = np.array(hmmDef[9:13]).astype(float)
 pi = np.array(hmmDef[-1]).astype(float)
 
-# a *= 1000
-# b *= 1000
-# pi*= 1000
-
 symList = np.array(hmmDef[2])
-
-#print a, "\n", b, "\n", pi
 
 stateList = []
 for stateNum in range(int(hmmDef[0][0])):
@@ -80,44 +86,33 @@ alpha1 = np.array(alpha1)
 
 num = 1
 # for loop here for number of sentences ot be recognized DONT FORGET
-T = int(obsDef[num][0])
-obs = obsDef[num+1]
-num += 2
+for n in range(numSent): 	
+	T = int(obsDef[num][0])
+	obs = obsDef[num+1]
+	num += 2
 
-objObs = []
-for o in obs:
-	for row in outputList:
-		for out in row:
-			if out.outSym == o:
-				# print out.origin.name
-				objObs.append(out)
+	objObs = []
+	for o in obs:
+		for row in outputList:
+			for out in row:
+				if out.outSym == o:
+					# print out.origin.name
+					objObs.append(out)
 
-# for x in objObs:
-# 	print x.outSym, x.b, x.index#, x.origin.index
+	ALPHA = np.zeros((T, len(hmmDef[1])))
 
-ALPHA = np.zeros((T, len(hmmDef[1])))
+	ind = objObs[0].index
+	ALPHA[0] = alpha1[:,ind]
 
-ind = objObs[0].index
-ALPHA[0] = alpha1[:,ind]
+	for t in range(1,T):
+		bjs=[]
+		for j in range(len(ALPHA[t])):
+			sumA = 0
+			for i in range(len(ALPHA[t-1])):
+				sumA += ALPHA[t-1][i] * a[i][j]
+			bj = b[j][objObs[t*4].index]
+			
+			z = sumA * bj
+			ALPHA[t,j] = z
 
-# print "ALPHA = "
-# print ALPHA
-# print "a = "
-# print a
-# print b
-
-for t in range(1,T):
-	bjs=[]
-	for j in range(len(ALPHA[t])):
-		sumA = 0
-		for i in range(len(ALPHA[t-1])):
-			sumA += ALPHA[t-1][i] * a[i][j]
-		bj = b[j][objObs[t*4].index]
-		
-		z = sumA * bj
-		ALPHA[t,j] = z#sumA
-	# for j in range(len(ALPHA[t])): 
-	# 	ALPHA[t][j] *= bjs[j]  
-
-# ALPHA[2][0] = .085*.05
-print sum(ALPHA[T-1])
+	print sum(ALPHA[T-1])
