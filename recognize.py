@@ -20,9 +20,9 @@ with open("./%s" %sys.argv[2], "rb") as infile:
 
 numSent = int(obsDef[0][0])
 
-a = np.array(hmmDef[4:8])
-b = np.array(hmmDef[9:13])
-pi = np.array(hmmDef[-1])
+a = np.array(hmmDef[4:8]).astype(float)
+b = np.array(hmmDef[9:13]).astype(float)
+pi = np.array(hmmDef[-1]).astype(float)
 
 symList = np.array(hmmDef[2])
 
@@ -48,6 +48,12 @@ for origState in stateList:
 
 outputList = np.array(outputList)
 
+del hmmDef[1][-1]
+
+
+
+
+
 
 def forHelp(alpha):
 	#recursive call
@@ -56,24 +62,21 @@ def forHelp(alpha):
 		alphaNext.append(alpha*sum(x.b*x.origin.a))
 	forHelp(alphaNext)
 
-def forward():
-	alpha1 = []
-	# base case
-	for x in range(len(outputList)):
-		temp = []
-		for l in outputList[x]:
-			temp.append(l.b * l.origin.pi)
-		alpha1.append(temp)
-	#print np.array(alpha1)[:,0]
-	forHelp(np.array(alpha1)[:,0])
 
-	print np.array(alpha1)
 
-# print obsDef
+# compute base case for all starting observations
+alpha1 = []
+for x in range(len(outputList)):
+	temp = []
+	for l in outputList[x]:
+		temp.append(l.b * l.origin.pi)
+	alpha1.append(temp)
+alpha1 = np.array(alpha1)
+# forHelp(np.array(alpha1)[:,0])
 
 num = 1
-	
-T = obsDef[num]
+# for loop here for number of sentences ot be recognized DONT FORGET
+T = int(obsDef[num][0])
 obs = obsDef[num+1]
 num += 2
 
@@ -85,13 +88,21 @@ for o in obs:
 				# print out.origin.name
 				objObs.append(out)
 
-for x in objObs:
-	print x.outSym, x.b, x.index
-# for t in range(T):
+# for x in objObs:
+# 	print x.outSym, x.b, x.index
 
-# print outputList
+ALPHA = np.zeros((T, len(hmmDef[1])))
 
-# print obs
+ind = objObs[0].index
+ALPHA[0] = alpha1[:,ind]
 
-# forward()
+print "ALPHA = "
+print ALPHA
+print "a = "
+print a
 
+for t in range(1,T):
+	sumA = 0
+	for aInd
+		for alphaInd in range(len(ALPHA[t-1])):
+			sumA += ALPHA[t-1][y] * a[][]
