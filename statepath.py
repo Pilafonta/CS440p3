@@ -3,11 +3,12 @@ Written by Karl Shiffler (shiffler@bu.edu)
 	   and Peter LaFontaine (lafonta@bu.edu)
 
 April 2, 2015
-Usage is "python recognize.py file.hmm file.obs"
+Usage is "python statepath.py file.hmm file.obs"
 
 Takes two command line arguments, the first being the HMM definition file, 
 and the second being the list of observations. It then calculates and prints 
-the probability of the observed sequences. 
+the probability of the observed sequences. If the probability is nonzero, it 
+also prints the most likely state path sequence. 
 
 '''
 import hmm
