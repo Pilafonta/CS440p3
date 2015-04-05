@@ -128,9 +128,25 @@ failures/limitations of your work?</li>
 <p>
 
 Our method was successful since our tests show that the Hidden Markov Model is able
-to distinguish between 'good' and 'bad' english sentences. The different probabilities that we
-found in our different test inputs show that there is a varying degree with which the HMM can distinguish
-between 'good' sentences and 'bad' sentences. 
+to distinguish between 'good' and 'bad' english sentences. Our methods are generally successful, for both
+the implementations of the forward algorithm and the Viterbi algorithm. For the forward algorithm, in 
+the first example, the probability is lower than we expected because there should be a greater chance
+of observing the given sequences. The lower probabilities tell us that the algorithm could be 
+optimized to give a greater chance of observing the sequence. Although the HMM could be optimized to give
+better probabilities, the HMM is still a reasonable model. Two additional sentences that were tested,
+"movies do students play games","games develop play students" give probabilities of .019% and 0%
+respectively, since neither of these sequences are genuine english sentences, and thus don't have
+high possibilities of being observed, whereas the example1 sentences have a better chance of 
+being observed, as they are closer to being genuine english sentences. For the Viterbi algorithm,
+implemented in statepath, we can see the state sequence of the input, which allows us to get a better
+idea of how the HMM can determine how something might get recognized. However, the HMM is able to
+distinguish the difference between a statement and a question sequence, because the question sequences
+usually starts with an auxiliary, which means the computer is able to tell when a sequence is a question
+or a statement based on the first word of the sequence. The HMM can distinguish between the two, however
+it is more difficult to find optimal question sequences than it is to find statement sequences. Our method
+could have been improved if we had implemented the Baum-Welch algorithm to better optimize the sequences,
+which would give higher probabilities of the sequences being observed.
+
 
 </p>
 
@@ -140,6 +156,9 @@ between 'good' sentences and 'bad' sentences.
 <p>
 Based on your discussion, what are your conclusions?  What is your
 main message?
+
+Our conclusions are that the forward algorithm and the Viterbi algorithm go a long way to solving two of
+the three major problems that come with using HMMs, and HMM's are very useful for language processing
 </p>
 
 
@@ -154,6 +173,9 @@ information (e.g., book name and publisher; conference proceedings and
 location; journal name, volume and pages; technical report and
 institution).  Material on the web should include the url and date of
 access.
+
+L. R. Rabiner. A Tutorial on Hidden Markov Models and Selected Applications in Speech Recognition, Proceedings of the IEEE, 77(2), pp. 257-286, 1989. pdf.
+
 </p>
 
 <p>
