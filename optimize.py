@@ -3,12 +3,8 @@ Written by Karl Shiffler (shiffler@bu.edu)
 	   and Peter LaFontaine (lafonta@bu.edu)
 
 April 2, 2015
-Usage is "python recognize.py file.hmm file.obs"
-
-Takes two command line arguments, the first being the HMM definition file, 
-and the second being the list of observations. It then calculates and prints 
-the probability of the observed sequences. 
-
+Usage is "python optimize.py file.hmm file.obs"
+optimize.py
 '''
 import hmm
 import csv
@@ -45,6 +41,7 @@ for stateNum in range(int(hmmDef[0][0])):
 
 connectList = []
 for stateFrom in stateList:
+	#print stateFrom.name, stateFrom.index, stateFrom.init
 	for stateTo in stateList:
 		if a[stateFrom.index][stateTo.index] > 0.0:
 			connectList.append(hmm.connect(stateFrom, stateTo, a[stateFrom.index][stateTo.index]))
@@ -62,13 +59,15 @@ del hmmDef[1][-1]
 
 
 # compute base case for all starting observations
-alpha1 = []
+beta1 = []
 for x in range(len(outputList)):
 	temp = []
 	for l in outputList[x]:
-		temp.append(l.b * l.origin.pi)
-	alpha1.append(temp)
-alpha1 = np.array(alpha1)
+		l.pi = 1
+		temp.append(l.pi)
+	beta1.append(temp)
+beta1 = np.array(beta1)
+#print beta1
 
 #compute and print the rest of the alphas
 num = 1
@@ -84,13 +83,17 @@ for n in range(numSent):
 				if out.outSym == o:
 					objObs.append(out)
 
-	ALPHA = np.zeros((T, len(hmmDef[1])))
+
+	BETA = np.zeros((T, len(hmmDef[1])))
 
 	ind = objObs[0].index
-	ALPHA[0] = alpha1[:,ind]
+	BETA[0] = beta1[:,ind]
+	#print ALPHA[0]
 
-	for t in range(1,T):
-		for j in range(len(ALPHA[t])):
+	for t in range(T,0,-1):
+		bjs=[]
+		print BETA
+		for j in range(len(BETA[t])):
 			sumA = 0
 			for i in range(len(ALPHA[t-1])):
 				sumA += ALPHA[t-1][i] * a[i][j]
@@ -99,5 +102,4 @@ for n in range(numSent):
 			z = sumA * bj
 			ALPHA[t,j] = z
 
-	#print ALPHA
-	print sum(ALPHA[T-1])
+	#print sum(ALPHA[T-1])

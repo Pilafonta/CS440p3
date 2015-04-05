@@ -1,0 +1,166 @@
+<html>
+<head>
+</head>
+<body>
+<center>
+<a href="http://www.bu.edu"><img border="0" src="http://www.cs.bu.edu/fac/betke/images/bu-logo.gif" width="119" height="120"></a>
+</center>
+
+<h1>Assignment Title</h1>
+<p> 
+ CS 440 P3 <br>
+ Peter LaFontaine <br>
+ Karl Shiffer <br>
+ Date: 4/3/15
+</p>
+
+<div class="main-body">
+<hr>
+<h2> Problem Definition </h2>
+<p>
+Give a concise description of current problem. For instance, what
+needs to be solved and why it is useful?  Do you make any assumptions?
+What are the difficulties?
+
+In this assignment we are building a simple natural language processor using Hidden Markov Models.
+We are given a simple library consisting of eight english words that can be combined to form sentences.
+This is useful because if it is scaled correctly then it can lead to breakthroughs like Dragon naturally speaking
+and more recently Google voice and Apple's advances with Siri. We make the assumption that there will not be any other
+words that are not in the library in the input. The difficulties are in successfully implementing the necessary algorithms
+
+</p>
+
+<hr>
+<h2> Method and Implementation </h2>
+<p>
+Give a concise description of the implemented method. For example, you might describe the motivation of current idea, the algorithmic steps or any formulation used in current method.
+
+We are using the forward half of the forward-backward algorithm, the Viterbi algorithm, and the Bauer-Welch algorithm.
+We use the forward implementation to find the observation probability of each input sentence.
+in the forward implementation we first intialize the forward probability as the joint probability of state S_i and the 
+inital observation O_1. We calculate the rest of the forward variable by summing up the joint probability that O_1,...,O_t are observed,
+And then multiplying by the probability b_j(O_t+1). We use the Viterbi algorithm to find the optimal path, where optimality means the path with the
+hightest probability of the observations given lambda. The Viterbi is remarkably similar to the implementation of our forward algorithm, however instead of 
+summing, we find the max and argmax of the probability over the sequence of probabilities of the observations
+</p>
+
+<p>
+Briefly outline the functions you created in your code to carry out your algorithmic steps described above.
+
+We created three classes that defined the states, the connections between the states and the different output probabilities.
+The state class defines the name of the state, the index, and the initial probability. The connect class defines the probability of the
+connection (a), the origin and the destination of the connection. The output class defined the originating class, the output symbol, and 
+the probability of the output (b). We then used these classes to implement the Forward and Viterbi algorithms, according to the tutorials
+in the Rabner paper.
+</p>
+
+<hr>
+<h2>Experiments</h2>
+<p>
+Describe your experiments, including the number of tests that you
+performed, and the relevant parameter values. 
+
+In addition to the given example1.obs and example2.obs we also created another file
+test.obs that contained 9 different inputs of various lengths and combinations of the given
+words in the library. We used the original 3 inputs given in example 1, in addition to several that we
+created ourselves. Our experiments were intended to find the probability of certain inputs given to the
+HMM. We also wanted to find the difference in probabilities for questions vs. statements, as well as
+the difference between single words and phrases.
+
+</p>
+<p>
+Define your evaluation
+metrics, e.g., detection rates, accuracy, running time. </p>
+
+For metrics we used the probability of the observation given lambda for each input,
+and we also looked for the optimal state sequence of the given input.
+
+
+<hr>
+<h2> Results</h2>
+<p>
+List your experimental results.  Provide examples of input images and output
+images. If relevant, you may provide images showing any intermediate steps
+
+</p>
+
+<p>
+<table>
+<tbody><tr><td colspan="3"><center><h3>Results</h3></center></td></tr>
+<tr>
+<td> Trial </td><td> Source Image </td> <td> Result Image</td> 
+</tr>
+<tr>
+  <td> trial 1 </td> 
+  <td> <img src="example1_input.png"> </td> 
+  <td> <img src="example1.png"> </td>
+</tr> 
+<tr>
+  <td> trial 2 </td> 
+  <td> <img src="example2_input.png"> </td> 
+  <td> <img src="example2.png"> </td>
+</tr> 
+<tr>
+  <td> trial 3 </td> 
+  <td> <img src="test_input.png"> </td> 
+  <td> <img src="test.png"> </td>
+</tr> 
+</tbody></table>
+</p>
+
+
+
+<hr>
+<h2> Discussion </h2>
+
+<p> 
+Discuss your method and results:
+</p><ul>
+<li>What are the strengths and weaknesses of your method? </li>
+<li>Do your results show that your method is generally successful or
+     are there limitations? Describe what you expected to find in your
+     experiments, and how that differed or was confirmed by your
+     results. </li>
+<li>Potential future work. How could your method be improved?   What
+would you try (if you had more time) to overcome the
+failures/limitations of your work?</li> 
+</ul>
+<p>
+
+Our method was successful since our tests show that the Hidden Markov Model is able
+to distinguish between 'good' and 'bad' english sentences. The different probabilities that we
+found in our different test inputs show that there is a varying degree with which the HMM can distinguish
+between 'good' sentences and 'bad' sentences. 
+
+</p>
+
+<hr>
+<h2> Conclusions </h2>
+
+<p>
+Based on your discussion, what are your conclusions?  What is your
+main message?
+</p>
+
+
+<hr>
+<h2> Credits and Bibliography </h2>
+<p>
+
+Cite any papers or other references you consulted while developing
+your solution.  Citations to papers should include the authors, the
+year of publication, the title of the work, and the publication
+information (e.g., book name and publisher; conference proceedings and
+location; journal name, volume and pages; technical report and
+institution).  Material on the web should include the url and date of
+access.
+</p>
+
+<p>
+Credit any joint work or discussions with your classmates. 
+</p>
+<hr>
+</div>
+
+</body>
+</html>
