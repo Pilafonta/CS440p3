@@ -21,7 +21,7 @@
 Give a concise description of current problem. For instance, what
 needs to be solved and why it is useful?  Do you make any assumptions?
 What are the difficulties?
-
+<br>
 In this assignment we are building a simple natural language processor using Hidden Markov Models.
 We are given a simple library consisting of eight english words that can be combined to form sentences.
 This is useful because if it is scaled correctly then it can lead to breakthroughs like Dragon naturally speaking
@@ -34,19 +34,19 @@ words that are not in the library in the input. The difficulties are in successf
 <h2> Method and Implementation </h2>
 <p>
 Give a concise description of the implemented method. For example, you might describe the motivation of current idea, the algorithmic steps or any formulation used in current method.
-
+<br>
 We are using the forward half of the forward-backward algorithm, the Viterbi algorithm, and the Bauer-Welch algorithm.
 We use the forward implementation to find the observation probability of each input sentence.
 in the forward implementation we first intialize the forward probability as the joint probability of state S_i and the 
 inital observation O_1. We calculate the rest of the forward variable by summing up the joint probability that O_1,...,O_t are observed,
 And then multiplying by the probability b_j(O_t+1). We use the Viterbi algorithm to find the optimal path, where optimality means the path with the
-hightest probability of the observations given lambda. The Viterbi is remarkably similar to the implementation of our forward algorithm, however instead of 
+hightest probability of the observations given lambda, the Hiden Markov Model. The Viterbi is remarkably similar to the implementation of our forward algorithm, however instead of 
 summing, we find the max and argmax of the probability over the sequence of probabilities of the observations
 </p>
 
 <p>
 Briefly outline the functions you created in your code to carry out your algorithmic steps described above.
-
+<br>
 We created three classes that defined the states, the connections between the states and the different output probabilities.
 The state class defines the name of the state, the index, and the initial probability. The connect class defines the probability of the
 connection (a), the origin and the destination of the connection. The output class defined the originating class, the output symbol, and 
@@ -158,7 +158,7 @@ Based on your discussion, what are your conclusions?  What is your
 main message?
 
 Our conclusions are that the forward algorithm and the Viterbi algorithm go a long way to solving two of
-the three major problems that come with using HMMs, and HMM's are very useful for language processing
+the three major problems that come with using HMMs, and HMM's are very useful for language processing. These methods could very clearly be expanded to further natural language processing capabilities and lead to powerful tools much like the Dragon software. HMMs present an interesting framework for analyzing relatively unstructured data, espcially when it follows some order such as language. Going forward, I expect to see potential applications of HMMs in many different computer science problems. 
 </p>
 
 
@@ -180,6 +180,8 @@ L. R. Rabiner. A Tutorial on Hidden Markov Models and Selected Applications in S
 
 <p>
 Credit any joint work or discussions with your classmates. 
+<br>
+This assignment was completed as a team consisting of Karl Shiffler and Peter LaFontaine. 
 </p>
 <hr>
 </div>
